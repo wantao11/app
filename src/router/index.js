@@ -18,7 +18,7 @@ export default new VueRouter({
         { path: '/home', component: Home, meta: { show: true } },
         { path: '/login', component: Login, meta: { show: false } },
         { path: '/register', component: Register, meta: { show: false } },
-        { path: '/Search/:keyword', component: Search, meta: { show: true }, name: 'search' },
+        { path: '/Search/:keyword?', component: Search, meta: { show: true }, name: 'search' },
         { path: '/', redirect: '/home' }
     ]
 })
