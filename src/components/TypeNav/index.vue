@@ -2,7 +2,8 @@
     <!-- 商品分类导航 -->
     <div class="type-nav">
         <div class="container">
-            <h2 class="all">全部商品分类</h2>
+            <h2 class="all" @mouseenter="enterShow" @mouseleave="leaveShow">全部商品分类</h2>
+            <!-- 上导航栏 -->
             <nav class="nav">
                 <a href="###">服装城</a>
                 <a href="###">美妆馆</a>
@@ -13,7 +14,8 @@
                 <a href="###">有趣</a>
                 <a href="###">秒杀</a>
             </nav>
-            <div class="sort">
+            <!-- 商品三级种类 -->
+            <div class="sort" v-show="show">
                 <!-- 三级联动 -->
                 <!-- 利用事件委派和编程式导航实现路由的跳转和传递参数 -->
                 <div class="all-sort-list2" @click="goSearch">
@@ -53,10 +55,20 @@ import { mapState } from 'vuex'
 export default {
     name: 'TypeNav',
 
+    data() {
+        return {
+            show: true,
+        }
+    },
+
     // 组件挂载完毕，向服务器发请求
     mounted() {
-        // 通知vuex发请求，获取数据，存在其小仓库中
+        // 通知vuex发请求，获取数据，存在其home小仓库中
         this.$store.dispatch('home/categoryList')
+        // 如果不是home组件，将商品分类隐藏
+        if (this.$route.path != '/home') {
+            this.show = false
+        }
     },
 
     computed: {
@@ -64,6 +76,7 @@ export default {
     },
 
     methods: {
+        // 进行路由跳转
         goSearch(event) {
             // 获取所点击的元素
             let element = event.target
@@ -71,15 +84,15 @@ export default {
             //获取目前鼠标点击标签的categoryname,category1id,category2id,category3id，
             // 通过四个属性是否存在来判断是否为a标签，以及属于哪一个等级的a标签
             // dataset可以获取节点的自定义属性和属性值
-            
+
             let { categoryname, category1id, category2id, category3id } = element.dataset
             // console.log(element.dataset)
 
             //categoryname存在，表示为a标签
             if (categoryname) {
                 // 整理路由跳转的参数
-                let location = {name:'search',}//跳转路由name  即location.name = 'search'
-                let query = {categoryName:categoryname}//路由参数,结构赋值  即query.categoryName = categoryName
+                let location = { name: 'search', }//跳转路由name  即location.name = 'search'
+                let query = { categoryName: categoryname }//路由参数,结构赋值  即query.categoryName = categoryName
 
                 //category1id一级a标签
                 if (category1id) {
@@ -98,9 +111,19 @@ export default {
                 //路由跳转  location{name:'search'}
                 this.$router.push(location)
             }
+        },
+        // 鼠标移入，让三级分类栏显示
+        enterShow() {
+            this.show = true
+        },
+        // 鼠标移出隐藏三级分类栏,在search中可用
+        leaveShow() {
+            if (this.$route.path != '/home') {
+                this.show = false
+            }
+
         }
     },
-
 }
 </script>
 
