@@ -4,9 +4,14 @@ import mockRequests from "./mockAjax"
 
 //首页三级分类接口
     //发请求：axios发送请求返回promise对象
-export const  reqCategoryList = () => {
+
+// 请求三级分类数据
+export const  reqGetCategoryList = () => {
     return requests({url: "/product/getBaseCategoryList", method: "get"})
 }
 
 // 获取banner(Home首页轮播图接口)
-export const reqGetBannerList = () => mockRequests.get('/banners')
+export const reqGetBannerList = () => mockRequests.get('/banner')
+
+// 获取floor数据
+export const reqGetFloorList = () =>mockRequests.get('/floor')

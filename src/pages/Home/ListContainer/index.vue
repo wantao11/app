@@ -4,9 +4,9 @@
         <div class="sortList clearfix">
             <div class="center">
                 <!--banner轮播-->
-                <div class="swiper-container" id="mySwiper">
+                <div class="swiper-container" ref="mySwiper">
                     <div class="swiper-wrapper">       <!--轮播图 -->
-                        <div class="swiper-slide" v-for="carousel in bannersList" :key="carousel.id">
+                        <div class="swiper-slide" v-for="carousel in bannerList" :key="carousel.id">
                             <img :src="carousel.imgUrl" />
                         </div>
                     </div>
@@ -111,13 +111,14 @@ import 'swiper/css/swiper.css'
 export default {
     name: 'ListContainer',
     //
-     watch:{
+    watch:{
     // eslint-disable-next-line no-unused-vars
-    bannersList(newValue,oldValue){
+    bannerList(newValue,oldValue){
+
         //this.$nextTick()使用
         this.$nextTick(()=>{
           // eslint-disable-next-line no-unused-vars
-          let mySwiper = new Swiper(document.getElementsByClassName("swiper-container"),{
+          let mySwiper = new Swiper(this.$refs.mySwiper,{
               loop:true,
             //分页器
             pagination:{
@@ -143,12 +144,11 @@ export default {
 
     mounted() {
         // 派发action
-        this.$store.dispatch('home/getBannersList')
-
+        this.$store.dispatch('home/getBannerList')
     },
 
     computed: {
-        ...mapState('home',{bannersList: 'bannersList'})
+        ...mapState('home',{bannerList: 'bannerList'})
     },
 }
 </script>

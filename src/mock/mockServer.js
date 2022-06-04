@@ -2,17 +2,17 @@
 利用mockjs来mock数据接口
 */
 import Mock from 'mockjs'
-import banners from './banners.json'
-import floors from './floors.json'
+import banner from './banner.json'
+import floor from './floor.json'
 
 // 提供广告位轮播数据的接口
-Mock.mock('/mock/banners', {
+Mock.mock('/mock/banner', {
     code: 200,
-    data: banners
+    data: banner
 })
 
 // 提供所有楼层数据的接口
-Mock.mock('/mock/floors', {
+Mock.mock('/mock/floor', {
     code: 200,
-    data: floors
+    data: floor
 })

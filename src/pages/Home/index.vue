@@ -12,8 +12,7 @@
         <!-- 猜你喜欢 -->
         <Like></Like>
         <!-- 楼层 -->
-        <Floor></Floor>
-        <Floor></Floor>
+        <Floor v-for="floor in floorList" :key="floor.id" :list="floor"></Floor> 
         <!-- 商标品牌 -->
         <Brand></Brand>
     </div>
@@ -28,9 +27,20 @@ import Like from './Like/index.vue'
 import Floor from './Floor/index.vue'
 import Brand from './Brand/index.vue'
 
+import {mapState} from 'vuex'
+
     export default {
     name: "MyHome",
-    components: { ListContainer, Recommend, Rank, Like, Floor, Brand }
+    components: { ListContainer, Recommend, Rank, Like, Floor, Brand },
+
+    mounted() {
+        // 派发action，获取floor组件的数据
+        this.$store.dispatch('home/getFloorList')
+    },
+
+    computed: {
+        ...mapState('home',{floorList:'floorList'})
+    },
 }
 </script>
 
