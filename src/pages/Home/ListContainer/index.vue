@@ -104,11 +104,42 @@
 
 <script>
 import {mapState} from "vuex"
-// import Swiper from 'swiper'
-
+import Swiper from 'swiper'
+//引入Swiper样式
+import 'swiper/css/swiper.css'
 
 export default {
     name: 'ListContainer',
+    //
+     watch:{
+    // eslint-disable-next-line no-unused-vars
+    bannersList(newValue,oldValue){
+        //this.$nextTick()使用
+        this.$nextTick(()=>{
+          // eslint-disable-next-line no-unused-vars
+          let mySwiper = new Swiper(document.getElementsByClassName("swiper-container"),{
+              loop:true,
+            //分页器
+            pagination:{
+              el: '.swiper-pagination',
+            //小球切换
+              clickable: true,
+            },
+            // 如果需要前进后退按钮
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            // 如果需要滚动条
+            scrollbar: {
+              el: '.swiper-scrollbar',
+            },
+          })
+        })
+    }
+  },
+
+
 
     mounted() {
         // 派发action
