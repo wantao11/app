@@ -1,8 +1,8 @@
 <template>
     <!-- 商品分类导航 -->
     <div class="type-nav">
-        <div class="container">
-            <h2 class="all" @mouseenter="enterShow" @mouseleave="leaveShow">全部商品分类</h2>
+        <div class="container" @mouseleave="leaveShow">
+            <h2 class="all" @mouseenter="enterShow" >全部商品分类</h2>
             <!-- 上导航栏 -->
             <nav class="nav">
                 <a href="###">服装城</a>
@@ -63,8 +63,6 @@ export default {
 
     // 组件挂载完毕，向服务器发请求
     mounted() {
-        // 通知vuex发请求，获取数据，存在其home小仓库中
-        this.$store.dispatch('home/categoryList')
         // 如果不是home组件，将商品分类隐藏
         if (this.$route.path != '/home') {
             this.show = false
@@ -106,6 +104,8 @@ export default {
                     //category3id三级a标签
                     query.category3Id = category3id
                 }
+                // 如果有params参数，带进去
+                location.params = this.$route.params;
                 //整理完参数,给到请求的query参数里  query:{categoryName:'',category123id:''}
                 location.query = query;
                 //路由跳转  location{name:'search'}

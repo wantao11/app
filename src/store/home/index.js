@@ -1,6 +1,6 @@
 // home模块小仓库
 
-import {reqCategoryList} from '@/api';
+import {reqCategoryList,reqGetBannerList} from '@/api';
 
 export default{
     // 开启命名空间
@@ -17,19 +17,31 @@ actions:{
         if(result.code === 200){
             context.commit('CATEGORYLIST',result.data);
         }
+    },
+
+    // 获取轮播图数据
+    async getBannersList(context){
+      let result =  await reqGetBannerList();
+      if(result.code === 200){
+        context.commit('GRTBANNERSLIST',result.data);
     }
+}
 },
 
 //准备mutations对象——修改state中的数据
 mutations:{
     CATEGORYLIST(state,values){
         state.categoryList = values.slice(0,16);
+    },
+    GRTBANNERSLIST(state,values){
+        state.bannersList = values
     }
 },
 
 //准备state对象——保存具体的数据
 state:{
     categoryList:[],
+    bannersList:[],
 },
 
 //准备getters对象——用于将state中的数据进行加工,类似于computed(计算属性)

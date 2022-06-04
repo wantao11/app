@@ -56,11 +56,9 @@ export default {
     methods: {
         // 搜索按钮
         goSearch(){
-            this.$router.push({
-                name:'search',
-                params:{keyword:this.keyword || undefined},
-                query:{k:this.keyword.toUpperCase()}
-                })
+            let location = ({ name:'search',params:{keyword:this.keyword || undefined}});
+            location.query = this.$route.query;
+            this.$router.push(location)
         },
     },
 }
