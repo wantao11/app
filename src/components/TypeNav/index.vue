@@ -81,8 +81,8 @@ export default {
             //html中会把大写转为小写
             //获取目前鼠标点击标签的categoryname,category1id,category2id,category3id，
             // 通过四个属性是否存在来判断是否为a标签，以及属于哪一个等级的a标签
-            // dataset可以获取节点的自定义属性和属性值
 
+            // dataset可以获取节点的自定义属性和属性值
             let { categoryname, category1id, category2id, category3id } = element.dataset
             // console.log(element.dataset)
 

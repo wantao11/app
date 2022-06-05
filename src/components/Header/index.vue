@@ -9,7 +9,7 @@
                     <p>
                         <span>请</span>
                         <router-link to="/login">登录</router-link>
-                        <router-link  class="register" to="/register">免费注册</router-link>
+                        <router-link class="register" to="/register">免费注册</router-link>
                     </p>
                 </div>
                 <div class="typeList">
@@ -33,7 +33,7 @@
             </h1>
             <div class="searchArea">
                 <form action="###" class="searchForm">
-                    <input type="text" id="autocomplete" class="input-error input-xxlarge"  v-model='keyword'/>
+                    <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model='keyword' />
                     <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
                 </form>
             </div>
@@ -49,14 +49,23 @@ export default {
 
     data() {
         return {
-            keyword:''
+            keyword: ''
         }
     },
 
+    mounted() {
+  //  组件挂载时就监听clear事件，clear事件在search模块中定义
+  //  当删除关键字面包屑时，触发该事件，同时header的输入框绑定的keyword要删除
+    this.$bus.$on("clear",()=>{
+      this.keyword = ''
+    })
+  },
+
+
     methods: {
         // 搜索按钮
-        goSearch(){
-            let location = ({ name:'search',params:{keyword:this.keyword || undefined}});
+        goSearch() {
+            let location = ({ name: 'search', params: { keyword: this.keyword || undefined } });
             location.query = this.$route.query;
             this.$router.push(location)
         },

@@ -2,10 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 
 // 三级联动组件---全局注册
-import TypeNav from '@/components/TypeNav'
+import TypeNav from '@/components/TypeNav';
+// 分页器
+import Pagination from '@/components/Pagination';
 
 // 第一个参数：全局组件的名字 第二个参数：哪一个组件
-Vue.component(TypeNav.name,TypeNav)
+Vue.component(TypeNav.name, TypeNav);
+Vue.component(Pagination.name, Pagination);
 
 // 引入MockServe.js  mock数据
 import '@/mock/mockServer'
@@ -25,6 +28,13 @@ import store from './store'
 
 new Vue({
   render: h => h(App),
+
+  //全局事件总线$bus配置
+  beforeCreate() {
+    //此处的this就是这个new Vue()对象
+    Vue.prototype.$bus = this
+  },
+
   // 注册路由，小写,这里写router时，组件身上都有$route，$router属性
   router,
   // 注册仓库:组件实例身上多了个$store属性
