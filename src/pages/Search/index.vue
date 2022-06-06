@@ -33,8 +33,8 @@
         <!--details-->
         <div class="details clearfix">
           <div class="sui-navbar">
-            <div class="navbar-inner filter">
-              <!-- 选择商品方式 -->
+             <!-- 选择商品方式 -->
+            <div class="navbar-inner filter">             
               <ul class="sui-nav">
                 <!-- 这里isOne、isTwo、isAsc、isDesc是计算属性，如果不使用计算属性要在页面中写很长的代码-->
                 <!-- 谁满足条件谁active，高亮 -->
@@ -55,7 +55,10 @@
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"><img :src="good.defaultImg" /></a>
+                    <!-- 路由跳转带参数params -->
+                    <router-link :to="`/detail/${goods.id}`">
+                      <img :src="good.defaultImg" />
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -78,7 +81,11 @@
             </ul>
           </div>
           <!-- 分页器，页 -->
-          <Pagination></Pagination>
+          <Pagination 
+          :currentPage="searchList.pageNo" 
+          :pageSize='searchParams.pageSize' 
+          :total='searchList.total'
+          @handleCurrentChange='handleCurrentChange'/>
         </div>
       </div>
     </div>
@@ -88,12 +95,12 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import SearchSelector from './SearchSelector/SearchSelector'
+import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'MySearch',
 
   components: {
-    SearchSelector,
-
+    SearchSelector,Pagination
 },
 
   data() {
@@ -185,7 +192,7 @@ export default {
       this.searchParams.trademark = undefined
       this.getDate()
     },
-    //获取子组件传递的属性信息（自定义事件）
+    //获取子组件传递的属性信息面包屑（自定义事件）
     attrInfo(attr, attrValue) {
       //searchParams.props元素为字符串形式，商品属性的数组: ["属性ID:属性值:属性名"]
       let props = `${attr.attrId}:${attrValue}:${attr.attrName}`
@@ -200,12 +207,12 @@ export default {
       this.searchParams.props.splice(index, 1)
       this.getDate()
     },
-    //排序操作，flag用于区分综合、价格，1：综合，2：价格
+    //排序操作，flag用于区分综合、价格，   1：综合，2：价格
     changeOrder(flag) {
-      let originOrder = this.searchParams.order  //获取初始order值
+      let originOrder = this.searchParams.order  //获取初始order值 1:desc
       let originFlag = this.searchParams.order.split(':')[0]; //获取初始flag值 1 
       let originSort = this.searchParams.order.split(':')[1]; //获取初始排序值 desc
-      // 如果点综合(同一个按钮),则由降序变为升序
+      // 如果点综合(同一个按钮),则改变排序方式
       if (flag == originFlag) {
         originOrder = `${flag}:${originSort === 'desc' ? 'asc' : 'desc'}`
       }
@@ -217,6 +224,11 @@ export default {
       this.searchParams.order = originOrder
       //再次发请求
       this.getDate()
+    },
+    //点击修改当前页面 
+    handleCurrentChange(val){
+        this.searchParams.pageNo = val
+        this.getDate()
     }
   },
 

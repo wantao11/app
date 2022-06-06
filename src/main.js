@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
+//按需引入
+import { Pagination } from 'element-ui'
 
 // 三级联动组件---全局注册
 import TypeNav from '@/components/TypeNav';
-// 分页器
-import Pagination from '@/components/Pagination';
 
 // 第一个参数：全局组件的名字 第二个参数：哪一个组件
 Vue.component(TypeNav.name, TypeNav);
+// 使用分页器UI
 Vue.component(Pagination.name, Pagination);
 
 // 引入MockServe.js  mock数据
