@@ -1,9 +1,9 @@
 <template>
   <div class="spec-preview">
-    <img src="../images/s1.png" />
+    <img :src="skuImageList[0].imgUrl" />
     <div class="event"></div>
     <div class="big">
-      <img src="../images/s1.png" />
+      <img :src="skuImageList[0].imgUrl" />
     </div>
     <div class="mask"></div>
   </div>
@@ -13,6 +13,14 @@
   export default {
     // eslint-disable-next-line vue/multi-word-component-names
     name: "Zoom",
+
+    props:{
+      skuImageList:{
+        default:'[]'
+      }
+    }
+
+
   }
 </script>
 

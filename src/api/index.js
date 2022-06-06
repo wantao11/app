@@ -16,5 +16,8 @@ export const reqGetBannerList = () => mockRequests.get('/banner')
 // 获取floor数据
 export const reqGetFloorList = () =>mockRequests.get('/floor')
 
-// 获取搜索模块数据                需要参数
+// 获取搜索模块数据           post请求需要参数
 export const reqGetSearchInfo = (params) => request({url:'/list',method:'post',data:params})
+
+// 获取商品详情信息的接口
+export const reqGetGoodInfo  = (skuId) => request({url:`/item/${skuId}`,method:'get' })

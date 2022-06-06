@@ -56,7 +56,7 @@
                 <div class="list-wrap">
                   <div class="p-img">
                     <!-- 路由跳转带参数params -->
-                    <router-link :to="`/detail/${goods.id}`">
+                    <router-link :to="`/detail/${good.id}`">
                       <img :src="good.defaultImg" />
                     </router-link>
                   </div>

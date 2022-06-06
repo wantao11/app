@@ -27,9 +27,14 @@ export default new VueRouter({
         { path: '/login', component: Login, meta: { show: false } },
         { path: '/register', component: Register, meta: { show: false } },
         { path: '/Search/:keyword?', component: Search, meta: { show: true }, name: 'search' },
-        { path: '/detail/', component: Detail, meta: { show: true } },
+        { path: '/detail/:skuId', component: Detail, meta: { show: true } },
         { path: '/', redirect: '/home' }
-    ]
+    ],
+    // eslint-disable-next-line no-unused-vars
+    scrollBehavior (to, from, savedPosition) {
+      // return 期望滚动到哪个的位置
+      return { y:0 };
+    }
 })
 
 
