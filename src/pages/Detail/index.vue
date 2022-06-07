@@ -59,15 +59,21 @@
               </div>
             </div>
           </div>
-
+          <!-- 属性选择 -->
           <div class="choose">
             <div class="chooseArea">
               <div class="choosed"></div>
+              <!-- 整个属性集合 -->
               <dl v-for="spuSaleAttr in spuSaleAttrList" :key="spuSaleAttr.id">
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
-                <dd changepirce="0" :class="{active:spuSaleAttrValue.isChecked==1}" v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList"
-                  :key="spuSaleAttrValue.id">
-                  {{spuSaleAttrValue.saleAttrValueName}}
+                <!-- 单个属性 -->
+                <dd changepirce="0" :class="{ active: spuSaleAttrValue.isChecked == 1 }"
+                  v-for="spuSaleAttrValue in spuSaleAttr.spuSaleAttrValueList" :key="spuSaleAttrValue.id"
+                  @click="changeActive(spuSaleAttrValue, spuSaleAttr.spuSaleAttrValueList)">
+                  <!-- 上面 spuSaleAttr.spuSaleAttrValueList是单个属性全部数组（例如颜色全部内容），
+                  spuSaleAttrValue是单个属性全部数组遍历出的小数组（例如每个颜色）-->
+
+                  {{ spuSaleAttrValue.saleAttrValueName }}
                 </dd>
               </dl>
             </div>
@@ -349,6 +355,18 @@ export default {
 
   computed: {
     ...mapGetters('detail', ['categoryView', 'skuInfo', 'spuSaleAttrList'])
+  },
+  methods: {
+    // 产品属性值切换高亮
+    //saleAttrValue是点击的属性里的实际点击内容（例如具体颜色），spuSaleAttrValueList是点击的单个属性全部内容（例如颜色里全部内容）
+    changeActive(saleAttrValue, spuSaleAttrValueList) {
+      // 遍历售卖属性isChecked为0没有高亮
+      spuSaleAttrValueList.forEach(item => {
+        item.isChecked = 0
+      });
+      // 把点击的售卖属性高亮
+      saleAttrValue.isChecked = 1
+    }
   }
 }
 </script>
