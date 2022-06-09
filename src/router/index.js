@@ -18,6 +18,8 @@ import Search from '@/pages/Search'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
+import AddCarSuccess from '@/pages/AddCarSuccess'
+import ShopCar from '@/pages/ShopCar'
 
 
 // 配置路由
@@ -28,6 +30,8 @@ export default new VueRouter({
         { path: '/register', component: Register, meta: { show: false } },
         { path: '/Search/:keyword?', component: Search, meta: { show: true }, name: 'search' },
         { path: '/detail/:skuId', component: Detail, meta: { show: true } },
+        { path: '/addCarSuccess', component: AddCarSuccess, meta: { show: true },name:'AddCarSuccess' },
+        { path: '/shopCar', component: ShopCar, meta: { show: true },name:'ShopCar' },
         { path: '/', redirect: '/home' }
     ],
     // eslint-disable-next-line no-unused-vars

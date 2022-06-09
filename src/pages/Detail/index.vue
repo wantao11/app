@@ -81,10 +81,10 @@
               <div class="controls">
                 <input autocomplete="off" class="itxt" v-model="skuNumber" @change="changeSkuNumber" />
                 <a href="javascript:" class="plus" @click="skuNumber++">+</a>
-                <a href="javascript:" class="mins" @click="skuNumber>1? skuNumber-- : 1">-</a>
+                <a href="javascript:" class="mins" @click="skuNumber > 1 ? skuNumber-- : 1">-</a>
               </div>
               <div class="add">
-                <a href="javascript:">加入购物车</a>
+                <a @click="addShopCar">加入购物车</a>
               </div>
             </div>
           </div>
@@ -343,7 +343,7 @@ import { mapGetters } from 'vuex'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Detail',
-  
+
   data() {
     return {
       // 购买产品个数
@@ -375,17 +375,35 @@ export default {
       saleAttrValue.isChecked = 1
     },
     // 表单元素改变产品个数
-    changeSkuNumber(event){
-        // 用户输入的文本 *1
-        let  value = event.target.value*1
-        // 如果用户输入的非法，出现 NAN 或小于 1，改成 1
-        if(isNaN(value) || value< 1){
-          this.skuNumber = 1
-        }else{
-          // 正常大于1 （但不能是小数）
-          this.skuNumber = parseInt(value)
-        }
+    changeSkuNumber(event) {
+      // 用户输入的文本 *1
+      let value = event.target.value * 1
+      // 如果用户输入的非法，出现 NAN 或小于 1，改成 1
+      if (isNaN(value) || value < 1) {
+        this.skuNumber = 1
+      } else {
+        // 正常大于1 （但不能是小数）
+        this.skuNumber = parseInt(value)
+      }
     },
+    // 加入购物车的回调函数
+    async addShopCar() {
+      // 发请求，将产品添加到数据库（通知服务器）
+      try {
+        // 成功
+        await this.$store.dispatch("detail/addOrUpdateShopCar", { skuId: this.$route.params.skuId, skuNumber: this.skuNumber });
+
+        // 进行路由跳转
+        //一些简单的数据，比如skuNum通过query传过去
+        //复杂的数据通过session存储     
+        //sessionStorage、localStorage只能存储字符串
+        sessionStorage.setItem("SKUINFO",JSON.stringify(this.skuInfo))
+        this.$router.push({ name: 'AddCarSuccess',query:{skuNumber:this.skuNumber} })
+      } catch (error) {
+        // 失败
+        alert(error.message)
+      }
+    }
   }
 }
 </script>
