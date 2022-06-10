@@ -33,3 +33,15 @@ export const reqDeleteCartById = (skuId) => request({ url: `/cart/deleteCart/${s
 
 // 修改商品选中状态
 export const reqUpdateCheckedId = (skuId, isChecked) => request({ url: `/cart/checkCart/${skuId}/${isChecked}`, method: 'get' })
+
+// 获取验证码
+export const reqGetCode = (phone) => request({ url: `/user/passport/sendCode/${phone}`, method:'get'})
+
+// 用户注册
+export const reqUserRegister = (data) => request({ url: '/user/passport/register',data,method: 'post'})
+
+// 登录
+export const reqUserLogin = (data) => request({ url: '/user/passport/login', data,method:'post'})
+
+// 获取用户信息
+export const reqUserInfo = () => request({ url: '/user/passport/auth/getUserInfo',method:'get'})
