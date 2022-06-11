@@ -50,7 +50,7 @@ export default {
                 commit("GETUSERINFO", result.data);
                 return 'ok';
             } else {
-                return Promise.reject(new Error('faile'));
+                return 
             }
         },
         //退出登录
