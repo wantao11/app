@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 //按需引入
-import { Pagination } from 'element-ui'
+import { Pagination,MessageBox } from 'element-ui'
 
 // 三级联动组件---全局注册
 import TypeNav from '@/components/TypeNav';
@@ -10,6 +10,11 @@ import TypeNav from '@/components/TypeNav';
 Vue.component(TypeNav.name, TypeNav);
 // 使用分页器UI
 Vue.component(Pagination.name, Pagination);
+// 使用弹出框
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+
+
 
 // 引入MockServe.js  mock数据
 import '@/mock/mockServer'
@@ -23,9 +28,9 @@ import router from './router'
 // 引入仓库
 import store from './store'
 
-// 测试api统一管理
-// import {reqCategoryList} from '@/api';
-// reqCategoryList();
+// 统一接口文件夹api里所有请求函数
+import * as API from '@/api';
+
 
 new Vue({
   render: h => h(App),
@@ -34,6 +39,7 @@ new Vue({
   beforeCreate() {
     //此处的this就是这个new Vue()对象
     Vue.prototype.$bus = this
+    Vue.prototype.$API = API
   },
 
   // 注册路由，小写,这里写router时，组件身上都有$route，$router属性

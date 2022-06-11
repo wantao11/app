@@ -35,13 +35,13 @@
             <img :src="order.imgUrl" alt="" style="width:100px;height:100px">
           </li>
           <li>
-            <p>{{order.skuName}}</p>
+            <p>{{ order.skuName }}</p>
             <h4>7天无理由退货</h4>
           </li>
           <li>
-            <h3>￥{{order.orderPrice}}.00</h3>
+            <h3>￥{{ order.orderPrice }}.00</h3>
           </li>
-          <li>X{{order.skuNum}}</li>
+          <li>X{{ order.skuNum }}</li>
           <li>有货</li>
         </ul>
       </div>
@@ -60,8 +60,8 @@
     <div class="money clearFix">
       <ul>
         <li>
-          <b><i>{{orderInfo.totalNum}}</i>件商品，总商品金额</b>
-          <span>¥{{orderInfo.totalAmount}}.00</span>
+          <b><i>{{ orderInfo.totalNum }}</i>件商品，总商品金额</b>
+          <span>¥{{ orderInfo.totalAmount }}.00</span>
         </li>
         <li>
           <b>返现：</b>
@@ -74,7 +74,7 @@
       </ul>
     </div>
     <div class="trade">
-      <div class="price">应付金额:<span>¥{{orderInfo.totalAmount}}.00</span></div>
+      <div class="price">应付金额:<span>¥{{ orderInfo.totalAmount }}.00</span></div>
       <div class="receiveInfo">
         寄送至:
         <span>{{ userDefaultAddress.fullAddress }}</span>
@@ -83,7 +83,7 @@
       </div>
     </div>
     <div class="sub clearFix">
-      <router-link class="subBtn" to="/pay">提交订单</router-link>
+      <a class="subBtn" @click="submitOrder">提交订单</a>
     </div>
   </div>
 </template>
@@ -117,12 +117,40 @@ export default {
         item.isDefault = 0
       });
       address.isDefault = 1
+    },
+    // 提交订单
+    async submitOrder() {
+      // 交易编号
+      let tradeNo = this.orderInfo.tradeNo
+      // 详细数据
+      let data = {
+        consignee: this.userDefaultAddress.consignee, //最终收件人的名字
+        consigneeTel: this.userDefaultAddress.phoneNum, //最终收件人的手机号
+        deliveryAddress: this.userDefaultAddress.fullAddress, //收件人的地址
+        paymentWay: "ONLINE", //支付方式
+        orderComment: this.msg, //买家的留言信息
+        orderDetailList: this.orderInfo.detailArrayList, //商品清单
+      };
+      // 提交订单
+      let result = await this.$API.reqSubmitOrder(tradeNo, data);
+      console.log(result);
+      // 提交订单成功
+      if (result.code == 200) {
+        this.orderId = result.data;
+        //路由跳转 + 路由传递参数
+        this.$router.push('/pay?orderId=' + this.orderId);
+        //提交的订单失败
+      } else {
+        alert(result.data);
+      }
     }
   },
 
   data() {
     return {
-      msg:''
+      msg: '',
+      //订单号
+      orderId: "",
     }
   },
 }
