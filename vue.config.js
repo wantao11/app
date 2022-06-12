@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  productionSourceMap: false,
   transpileDependencies: true,
   devServer: {
     // true 则热更新，false 则手动刷新，默认值为 true

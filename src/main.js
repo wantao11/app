@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 //按需引入
-import { Pagination,MessageBox } from 'element-ui'
+import { Pagination, MessageBox } from 'element-ui'
 
 // 三级联动组件---全局注册
 import TypeNav from '@/components/TypeNav';
@@ -30,6 +30,16 @@ import store from './store'
 
 // 统一接口文件夹api里所有请求函数
 import * as API from '@/api';
+
+// 引入懒加载
+import VueLazyload from 'vue-lazyload';
+// 注册插件
+Vue.use(VueLazyload)
+//引入自定义插件
+import myPlugins from '@/plugins/myPlugins';
+Vue.use(myPlugins, { name: 'upper' });
+//引入表单校验插件
+import "@/plugins/validate";
 
 
 new Vue({

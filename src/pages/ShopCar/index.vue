@@ -58,7 +58,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" @click="$router.push('/trade')">结算</a>
+          <a class="sum-btn" @click="toTrade">结算</a>
         </div>
       </div>
     </div>
@@ -168,6 +168,13 @@ export default {
         alert(error.message);
       }
     },
+
+    // 跳转路由
+    toTrade(){
+        this.$route.meta.flag = true
+        this.$router.push('/trade')
+      }
+
 
   },
 

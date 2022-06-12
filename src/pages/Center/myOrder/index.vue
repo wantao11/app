@@ -20,7 +20,7 @@
       </div>
       <div class="orders">
         <!-- 每一笔订单 -->
-        <table class="order-item" v-for="order  in myOrder.records" :key="order.id">
+        <table class="order-item" v-for="order in myOrder.records" :key="order.id">
           <thead>
             <tr>
               <th colspan="5">
@@ -32,30 +32,35 @@
           </thead>
           <tbody>
             <tr v-for="(cart, index) in order.orderDetailList" :key="cart.id">
+            <!-- 商品 -->
               <td width="60%">
                 <div class="typographic">
                   <img :src="cart.imgUrl" style="width:100px;height:100px" />
-                  <a href="#" class="block-text">{{ cart.skuName }}</a>
+                  <a  class="block-text">{{ cart.skuName }}</a>
                   <span>x{{ cart.skuNum }}</span>
-                  <a href="#" class="service">售后申请</a>
+                  <a class="service">售后申请</a>
                 </div>
               </td>
+              <!-- 名字 -->
               <td :rowspan="order.orderDetailList.length" v-if="index == 0" width="8%" class="center">
                 {{ order.consignee }}
               </td>
+              <!-- 金额，在线支付 -->
               <td :rowspan="order.orderDetailList.length" v-if="index == 0" width="13%" class="center">
                 <ul class="unstyled">
                   <li>总金额¥{{ order.totalAmount }}.00</li>
                   <li>在线支付</li>
                 </ul>
               </td>
+              <!-- 是否已支付 -->
               <td :rowspan="order.orderDetailList.length" v-if="index == 0" width="8%" class="center">
                 <a href="#" class="btn">{{ order.orderStatusName }}</a>
               </td>
+              <!-- 评价 -->
               <td :rowspan="order.orderDetailList.length" v-if="index == 0" width="13%" class="center">
                 <ul class="unstyled">
                   <li>
-                    <a href="mycomment.html" target="_blank">评价|晒单</a>
+                    <a target="_blank">评价|晒单</a>
                   </li>
                 </ul>
               </td>
